@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\HumTemp;
 use App\Models\Microphone;
 use App\Models\MQ135;
+use Carbon\Carbon;
 
 
 class ApiController extends Controller
@@ -39,6 +40,7 @@ class ApiController extends Controller
         $mq135Reading->benzene = $request->benzene;
         $mq135Reading->smoke = $request->smoke;
         $mq135Reading->CO2 = $request->CO2;
+        $mq135Reading->updated_at = Carbon::now();
 
         $mq135Reading->save();
         return response()->json([
@@ -49,6 +51,7 @@ class ApiController extends Controller
     public function createMicrophoneReading(Request $request) {
         $microphoneReading = new Microphone;
         $microphoneReading->decibels = $request->decibels;
+        $microphoneReading->updated_at = Carbon::now();
 
         $microphoneReading->save();
         return response()->json([
@@ -60,6 +63,7 @@ class ApiController extends Controller
         $humtempReading = new HumTemp;
         $humtempReading->humidity = $request->humidity;
         $humtempReading->temperature = $request->temperature;
+        $humtempReading->updated_at = Carbon::now();
 
         $humtempReading->save();
         return response()->json([
