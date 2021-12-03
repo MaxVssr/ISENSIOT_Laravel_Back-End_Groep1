@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class HumTemp extends Model
 {
+    protected $table = 'humtemp';
     use HasFactory;
 }
