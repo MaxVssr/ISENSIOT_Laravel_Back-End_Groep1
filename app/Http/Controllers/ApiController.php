@@ -40,6 +40,7 @@ class ApiController extends Controller
         $mq135Reading->benzene = $request->benzene;
         $mq135Reading->smoke = $request->smoke;
         $mq135Reading->CO2 = $request->CO2;
+        $mq135Reading->timeSpentMs = $request->timeSpentMs;
         $mq135Reading->updated_at = Carbon::now();
 
         $mq135Reading->save();
@@ -51,6 +52,7 @@ class ApiController extends Controller
     public function createMicrophoneReading(Request $request) {
         $microphoneReading = new Microphone;
         $microphoneReading->decibel = $request->decibel;
+        $microphoneReading->timeSpentMs = $request->timeSpentMs;
         $microphoneReading->updated_at = Carbon::now();
 
         $microphoneReading->save();
@@ -63,6 +65,7 @@ class ApiController extends Controller
         $humtempReading = new HumTemp;
         $humtempReading->humidity = $request->humidity;
         $humtempReading->temperature = $request->temperature;
+        $humtempReading->timeSpentMs = $request->timeSpentMs;
         $humtempReading->updated_at = Carbon::now();
 
         $humtempReading->save();
