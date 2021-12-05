@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
-
+use App\Models\Token;
 use App\Models\User;
+use Exception;
 
 
 class AuthController extends Controller
@@ -21,6 +22,8 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('jwt.verify', ['except' => ['login', 'register']]);
+	    $this->middleware('jwt.xauth', ['except' => ['login', 'register', 'refresh']]);
+	    $this->middleware('jwt.xrefresh', ['only' => ['refresh']]);
     }
 
 
@@ -72,12 +75,11 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (! $access_token = auth()->claims(['xtype' => 'auth'])->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-
-        return $this->respondWithToken($token);
+			
+        return $this->respondWithToken($access_token);
     }
 
 
@@ -99,11 +101,26 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        $refresh_token_obj = Token::findPairByValue( auth()->getToken()->get() );
         auth()->logout();
-
+        auth()->setToken( $refresh_token_obj->value )->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+
+
+    public function logoutall(Request $request){
+        foreach( auth()->user()->token as $token_obj ){
+            try{
+            auth()->setToken( $token_obj->value )->invalidate(true);
+            }
+            catch (Exception $e){
+                //do nothing
+            }
+        }
+
+        return response()->json(['message' => 'Successfully logged out from all devices']);
+        }
 
 
     /**
@@ -113,7 +130,11 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        $access_token = auth()->claims(['xtype' => 'auth'])->refresh(true,true);
+        auth()->setToken($access_token); 
+
+        return $this->respondWithToken($access_token);
+     
     }
 
 
@@ -124,13 +145,45 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken($access_token)
     {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+      $response_array = [
+        'access_token' => $access_token,
+        'token_type' => 'bearer',
+        'access_expires_in' => auth()->factory()->getTTL() * 60,
+      ];
+
+      $access_token_obj = Token::create([
+        'user_id' => auth()->user()->id,
+        'value' => $access_token, //or auth()->getToken()->get();
+        'jti' => auth()->payload()->get('jti'),
+        'type' => auth()->payload()->get('xtype'),
+        'payload' => auth()->payload()->toArray(),
+      ]);
+
+      $refresh_token = auth()->claims([
+          'xtype' => 'refresh',
+          'xpair' => auth()->payload()->get('jti')
+        ])->setTTL(auth()->factory()->getTTL() * 3)->tokenById(auth()->user()->id);
+
+      $response_array +=[
+        'refresh_token' => $refresh_token,
+        'refresh_expires_in' => auth()->factory()->getTTL() * 60
+      ];
+
+      $refresh_token_obj = Token::create([
+        'user_id' => auth()->user()->id,
+        'value' => $refresh_token,
+        'jti' => auth()->setToken($refresh_token)->payload()->get('jti'),
+        'type' => auth()->setToken($refresh_token)->payload()->get('xtype'),
+        'pair' => $access_token_obj->id,
+        'payload' => auth()->setToken($refresh_token)->payload()->toArray(),
+      ]);
+
+      $access_token_obj->pair = $refresh_token_obj->id;
+      $access_token_obj->save();
+
+      return response()->json($response_array);
     }
 	
 	

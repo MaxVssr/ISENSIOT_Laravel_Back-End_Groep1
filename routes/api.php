@@ -34,6 +34,7 @@ Route::group([
     Route::post('me', [App\Http\Controllers\AuthController::class, 'me']);
 
     Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
+    Route::post('logoutall', [App\Http\Controllers\AuthController::class, 'logoutall']);
 });
 
 Route::any('{any}', function(){
