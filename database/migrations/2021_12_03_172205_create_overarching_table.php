@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMicrophoneTable extends Migration
+class CreateOverarchingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,18 @@ class CreateMicrophoneTable extends Migration
      */
     public function up()
     {
-        Schema::create('microphone', function (Blueprint $table) {
+        Schema::create('overarching', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('decibel');
-            $table->foreign('decibel')->references('decibel')->on('overarching');
+            $table->integer('NH3');
+            $table->integer('NO2');
+            $table->integer('Alcohol');
+            $table->integer('Benzene');
+            $table->integer('Smoke');
+            $table->integer('CO2');
+            $table->decimal('humidity');
+            $table->decimal('temperature');
             $table->decimal('timeSpentMs')->default('0');
-            $table->foreign('timeSpentMs')->references('timeSpentMs')->on('overarching');
             $table->timestamps();
         });
     }
@@ -30,10 +36,6 @@ class CreateMicrophoneTable extends Migration
      */
     public function down()
     {
-        Schema::table('microphone', function (Blueprint $table) {
-            $table->dropForeign('microphone_decibel_foreign');
-            $table->dropForeign('microphone_timeSpentMs_foreign');
-        });
-        Schema::dropIfExists('microphone');
+        Schema::dropIfExists('overarching');
     }
 }

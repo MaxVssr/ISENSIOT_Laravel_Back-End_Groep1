@@ -14,10 +14,13 @@ class CreateHumtempTable extends Migration
     public function up()
     {
         Schema::create('humtemp', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->decimal('humidity');
+            $table->foreign('humidity')->references('humidity')->on('overarching');
             $table->decimal('temperature');
+            $table->foreign('temperature')->references('temperature')->on('overarching');
             $table->decimal('timeSpentMs')->default('0');
+            $table->foreign('timeSpentMs')->references('timeSpentMs')->on('overarching');
             $table->timestamps();
         });
     }
@@ -29,6 +32,12 @@ class CreateHumtempTable extends Migration
      */
     public function down()
     {
+        Schema::table('humtemp', function (Blueprint $table) {
+            $table->dropForeign('humtemp_humidity_foreign');
+            $table->dropForeign('humtemp_temperature_foreign');
+            $table->dropForeign('humtemp_timeSpentMs_foreign');
+
+        });
         Schema::dropIfExists('humtemp');
     }
 }

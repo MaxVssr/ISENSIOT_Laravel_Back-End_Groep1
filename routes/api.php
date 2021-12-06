@@ -18,12 +18,14 @@ use App\Http\Controllers\ApiController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::get('users', [ApiController::class, 'getAllUsers']);
-Route::get('mq135', [ApiController::class, 'getMQ135Readings']);
-Route::get('microphone', [ApiController::class, 'getMicrophoneReadings']);
-Route::get('humtemp', [ApiController::class, 'getHumTempReadings']);
+Route::get('readings/users', [ApiController::class, 'getAllUsers']);
+Route::get('readings/mq135', [ApiController::class, 'getMQ135Readings']);
+Route::get('readings/microphone', [ApiController::class, 'getMicrophoneReadings']);
+Route::get('readings/humtemp', [ApiController::class, 'getHumTempReadings']);
+Route::get('readings/all', [ApiController::class, 'getOverarchingReadings']);
 
 Route::post('createmq135', [ApiController::class, 'createMQ135Reading']);
 Route::post('createmicrophone', [ApiController::class, 'createMicrophoneReading']);
 Route::post('createhumtemp', [ApiController::class, 'createHumTempReading']);
+Route::post('create', [ApiController::class, 'createOverarchingReading']);
 
