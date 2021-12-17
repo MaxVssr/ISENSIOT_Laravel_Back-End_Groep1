@@ -34,12 +34,7 @@ class ApiController extends Controller
 
     public function createMQ135Reading(Request $request) {
         $mq135Reading = new MQ135;
-        $mq135Reading->NH3 = $request->NH3;
-        $mq135Reading->NO2 = $request->NO2;
-        $mq135Reading->Alcohol = $request->Alcohol;
-        $mq135Reading->Benzene = $request->Benzene;
-        $mq135Reading->Smoke = $request->Smoke;
-        $mq135Reading->CO2 = $request->CO2;
+        $mq135Reading->airQuality = $request->airQuality;
         $mq135Reading->timeSpentMs = $request->timeSpentMs;
         $mq135Reading->updated_at = Carbon::now();
 

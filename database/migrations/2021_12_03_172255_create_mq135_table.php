@@ -15,12 +15,7 @@ class CreateMq135Table extends Migration
     {
         Schema::create('mq135', function (Blueprint $table) {
             $table->id();
-            $table->integer('NH3');
-            $table->integer('NO2');
-            $table->integer('Alcohol');
-            $table->integer('Benzene');
-            $table->integer('Smoke');
-            $table->integer('CO2');
+            $table->integer('airQuality');
             $table->decimal('timeSpentMs')->default('0');
             $table->timestamps();
         });
