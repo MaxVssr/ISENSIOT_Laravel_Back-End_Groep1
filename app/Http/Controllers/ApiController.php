@@ -36,7 +36,7 @@ class ApiController extends Controller
         $mq135Reading = new MQ135;
         $mq135Reading->airQuality = $request->airQuality;
         $mq135Reading->timeSpentMs = $request->timeSpentMs;
-        $mq135Reading->updated_at = Carbon::now();
+        $mq135Reading->updated_at = Carbon::now()->format('d-m-Y');
 
         $mq135Reading->save();
         return response()->json([
@@ -48,7 +48,7 @@ class ApiController extends Controller
         $microphoneReading = new Microphone;
         $microphoneReading->decibel = $request->decibel;
         $microphoneReading->timeSpentMs = $request->timeSpentMs;
-        $microphoneReading->updated_at = Carbon::now();
+        $microphoneReading->updated_at = Carbon::now()->format('d-m-Y');
 
         $microphoneReading->save();
         return response()->json([
@@ -61,7 +61,7 @@ class ApiController extends Controller
         $humtempReading->humidity = $request->humidity;
         $humtempReading->temperature = $request->temperature;
         $humtempReading->timeSpentMs = $request->timeSpentMs;
-        $humtempReading->updated_at = Carbon::now();
+        $humtempReading->updated_at = Carbon::now()->format('d-m-Y');
 
         $humtempReading->save();
         return response()->json([
