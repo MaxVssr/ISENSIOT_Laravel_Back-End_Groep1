@@ -17,6 +17,8 @@ class CreateMq135Table extends Migration
             $table->id();
             $table->integer('airQuality');
             $table->decimal('timeSpentMs')->default('0');
+            $table->date('timestampDate')->nullable();
+            $table->time('timestampTime')->nullable();
             $table->timestamps();
         });
     }

@@ -18,6 +18,8 @@ class CreateHumtempTable extends Migration
             $table->decimal('humidity');
             $table->decimal('temperature');
             $table->decimal('timeSpentMs')->default('0');
+            $table->date('timestampDate')->nullable();
+            $table->time('timestampTime')->nullable();
             $table->timestamps();
         });
     }

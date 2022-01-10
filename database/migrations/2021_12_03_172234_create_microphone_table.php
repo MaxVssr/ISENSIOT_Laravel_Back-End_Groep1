@@ -17,6 +17,8 @@ class CreateMicrophoneTable extends Migration
             $table->id();
             $table->decimal('decibel');
             $table->decimal('timeSpentMs')->default('0');
+            $table->date('timestampDate')->nullable();
+            $table->time('timestampTime')->nullable();
             $table->timestamps();
         });
     }
