@@ -15,7 +15,7 @@ class CreateMicrophoneTable extends Migration
     {
         Schema::create('microphone', function (Blueprint $table) {
             $table->id();
-            $table->decimal('decibel');
+            $table->decimal('decibel')->index();
             $table->decimal('timeSpentMs')->default('0');
             $table->date('timestampDate')->nullable();
             $table->time('timestampTime')->nullable();

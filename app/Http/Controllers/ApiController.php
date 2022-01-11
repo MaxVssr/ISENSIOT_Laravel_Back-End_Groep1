@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\HumTemp;
 use App\Models\Microphone;
 use App\Models\MQ135;
+use App\Models\Overarching;
 use Carbon\Carbon;
 
 
@@ -30,6 +31,21 @@ class ApiController extends Controller
     public function getHumTempReadings() {
         $humtempReadings = HumTemp::all()->toJson(JSON_PRETTY_PRINT);
         return response($humtempReadings, 200);
+    }
+
+    public function getOverarchingReadings() {
+        $overarchingReadings = Overarching::get()->toJson(JSON_PRETTY_PRINT);
+        return response($overarchingReadings, 200);
+    }
+
+    public function createOverarchingReading(Request $request) {
+        $overarchingReading = new Overarching;
+        $overarchingReading->decibel = $request->decibel;
+
+        $overarchingReading->save();
+        return response()->json([
+            "message" => "Overarching record was created"
+        ], 201);
     }
 
     public function createMQ135Reading(Request $request) {

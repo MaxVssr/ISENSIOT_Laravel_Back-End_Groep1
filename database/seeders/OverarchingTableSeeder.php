@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use DB;
 
-class MicrophoneTableSeeder extends Seeder
+class OverarchingTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,6 @@ class MicrophoneTableSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('microphone')->insert([
-        //     'decibel' => '73.1',
-        // ]);
+
     }
 }
