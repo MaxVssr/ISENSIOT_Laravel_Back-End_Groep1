@@ -14,9 +14,9 @@ class HumTempTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('humtemp')->insert([
-            'humidity' => '70.8',
-            'temperature' => '18.3',
-        ]);
+        // DB::table('humtemp')->insert([
+        //     'humidity' => '70.8',
+        //     'temperature' => '18.3',
+        // ]);
     }
 }

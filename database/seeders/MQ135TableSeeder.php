@@ -14,8 +14,8 @@ class MQ135TableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('mq135')->insert([
-            'airQuality' => '715',
-        ]);
+        // DB::table('mq135')->insert([
+        //     'airQuality' => '715',
+        // ]);
     }
 }
