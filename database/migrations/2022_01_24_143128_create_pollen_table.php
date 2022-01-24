@@ -23,6 +23,7 @@ class CreatePollenTable extends Migration
             $table->string('weed_pollen_risk')->default("Low");
             $table->date('timestampDate')->nullable();
             $table->time('timestampTime')->nullable();
+            $table->timestamps();
         });
     }
 
