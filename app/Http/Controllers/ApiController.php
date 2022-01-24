@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\HumTemp;
 use App\Models\Microphone;
 use App\Models\MQ135;
+use App\Models\Pollen;
 use Carbon\Carbon;
 
 
@@ -30,6 +31,11 @@ class ApiController extends Controller
     public function getHumTempReadings() {
         $humtempReadings = HumTemp::all()->toJson(JSON_PRETTY_PRINT);
         return response($humtempReadings, 200);
+    }
+
+        public function getPollenReadings() {
+        $pollenReadings = Pollen::all()->toJson(JSON_PRETTY_PRINT);
+        return response($pollenReadings, 200);
     }
 
     public function createMQ135Reading(Request $request) {
@@ -69,6 +75,23 @@ class ApiController extends Controller
         $humtempReading->save();
         return response()->json([
             "message" => "HumTemp record was created"
+        ], 201);
+    }
+
+    public function createPollenReading(Request $request) {
+        $pollenReading = new Pollen;
+        $pollenReading->grass_pollen_count = $request->grass_pollen_count;
+        $pollenReading->tree_pollen_count = $request->tree_pollen_count;
+        $pollenReading->weed_pollen_count = $request->weed_pollen_count;
+        $pollenReading->grass_pollen_risk = $request->grass_pollen_risk;
+        $pollenReading->tree_pollen_risk = $request->tree_pollen_risk;
+        $pollenReading->weed_pollen_risk = $request->weed_pollen_risk;
+        $pollenReading->timestampDate = Carbon::today()->toDateTimeString();
+        $pollenReading->timestampTime = Carbon::now()->toTimeString();
+
+        $pollenReading->save();
+        return response()->json([
+            "message" => "Pollen record was created"
         ], 201);
     }
 }

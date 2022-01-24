@@ -15,8 +15,8 @@ class CreateHumtempTable extends Migration
     {
         Schema::create('humtemp', function (Blueprint $table) {
             $table->id();
-            $table->decimal('humidity');
-            $table->decimal('temperature');
+            $table->integer('humidity');
+            $table->integer('temperature');
             $table->decimal('timeSpentMs')->default('0');
             $table->date('timestampDate')->nullable();
             $table->time('timestampTime')->nullable();
