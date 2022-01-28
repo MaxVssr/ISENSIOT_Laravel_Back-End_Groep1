@@ -86,8 +86,8 @@ class ApiController extends Controller
         $pollenReading->grass_pollen_risk = $request->grass_pollen_risk;
         $pollenReading->tree_pollen_risk = $request->tree_pollen_risk;
         $pollenReading->weed_pollen_risk = $request->weed_pollen_risk;
-        $pollenReading->timestampDate = Carbon::today()->toDateTimeString();
-        $pollenReading->timestampTime = Carbon::now()->toTimeString();
+        // $pollenReading->timestampDate = Carbon::today()->toDateTimeString();
+        // $pollenReading->timestampTime = Carbon::now()->toTimeString();
 
         $pollenReading->save();
         return response()->json([
