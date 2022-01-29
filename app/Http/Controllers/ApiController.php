@@ -53,7 +53,7 @@ class ApiController extends Controller
 
     public function createMicrophoneReading(Request $request) {
         $microphoneReading = new Microphone;
-        $microphoneReading->decibel = $request->decibel;
+        $microphoneReading->soundPollution = $request->soundPollution;
         $microphoneReading->timeSpentMs = $request->timeSpentMs;
         $microphoneReading->timestampDate = Carbon::today()->toDateTimeString();
         $microphoneReading->timestampTime = Carbon::now()->toTimeString();
