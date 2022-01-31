@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\HumTemp;
 use App\Models\Microphone;
-use App\Models\MQ135;
+use App\Models\Pms5003;
 use App\Models\Pollen;
 use Carbon\Carbon;
 
@@ -18,9 +18,9 @@ class ApiController extends Controller
         return response($users, 200);
     }
 
-    public function getMQ135Readings() {
-        $mq135Readings = MQ135::all()->toJson(JSON_PRETTY_PRINT);
-        return response($mq135Readings, 200);
+    public function getPms5003Readings() {
+        $pms5003Readings = Pms5003::all()->toJson(JSON_PRETTY_PRINT);
+        return response($pms5003Readings, 200);
     }
 
     public function getMicrophoneReadings() {
@@ -38,16 +38,18 @@ class ApiController extends Controller
         return response($pollenReadings, 200);
     }
 
-    public function createMQ135Reading(Request $request) {
-        $mq135Reading = new MQ135;
-        $mq135Reading->airQuality = $request->airQuality;
-        $mq135Reading->timeSpentMs = $request->timeSpentMs;
-        $mq135Reading->timestampDate = Carbon::today()->toDateTimeString();
-        $mq135Reading->timestampTime = Carbon::now()->toTimeString();
+    public function createPms5003Reading(Request $request) {
+        $pms5003Reading = new Pms5003;
+        $pms5003Reading->pm1 = $request->pm1;
+        $pms5003Reading->pm25 = $request->pm25;
+        $pms5003Reading->pm10 = $request->pm10;
+        $pms5003Reading->timeSpentMs = $request->timeSpentMs;
+        $pms5003Reading->timestampDate = Carbon::today()->toDateTimeString();
+        $pms5003Reading->timestampTime = Carbon::now()->toTimeString();
 
-        $mq135Reading->save();
+        $pms5003Reading->save();
         return response()->json([
-            "message" => "MQ135 record was created"
+            "message" => "PMS5003 record was created"
         ], 201);
     }
 

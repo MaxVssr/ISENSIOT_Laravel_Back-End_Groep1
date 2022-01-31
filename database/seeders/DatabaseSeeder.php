@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersTableSeeder::class,
             MicrophoneTableSeeder::class,
-            MQ135TableSeeder::class,
+            Pms5003TableSeeder::class,
             HumTempTableSeeder::class,
         ]);
     }

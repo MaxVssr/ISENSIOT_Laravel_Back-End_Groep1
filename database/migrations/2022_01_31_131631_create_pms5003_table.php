@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMq135Table extends Migration
+class CreatePms5003Table extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateMq135Table extends Migration
      */
     public function up()
     {
-        Schema::create('mq135', function (Blueprint $table) {
+        Schema::create('pms5003', function (Blueprint $table) {
             $table->id();
-            $table->integer('airPollution');
+            $table->integer('pm1');
+            $table->integer('pm25');
+            $table->integer('pm10');
             $table->decimal('timeSpentMs')->default('0');
             $table->date('timestampDate')->nullable();
             $table->time('timestampTime')->nullable();
@@ -30,6 +32,6 @@ class CreateMq135Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mq135');
+        Schema::dropIfExists('pms5003');
     }
 }

@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use DB;
 
-class MQ135TableSeeder extends Seeder
+class Pms5003TableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +13,6 @@ class MQ135TableSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('mq135')->insert([
-        //     'airQuality' => '715',
-        // ]);
+        //
     }
 }

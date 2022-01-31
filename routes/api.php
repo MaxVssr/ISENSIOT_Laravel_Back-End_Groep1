@@ -19,12 +19,12 @@ use App\Http\Controllers\ApiController;
 //     return $request->user();
 // });
 Route::get('users', [ApiController::class, 'getAllUsers']);
-Route::get('mq135', [ApiController::class, 'getMQ135Readings']);
+Route::get('pms5003', [ApiController::class, 'getPms5003Readings']);
 Route::get('microphone', [ApiController::class, 'getMicrophoneReadings']);
 Route::get('humtemp', [ApiController::class, 'getHumTempReadings']);
 Route::get('pollen', [ApiController::class, 'getPollenReadings']);
 
-Route::post('createmq135', [ApiController::class, 'createMQ135Reading']);
+Route::post('createpms5003', [ApiController::class, 'createPms5003Reading']);
 Route::post('createmicrophone', [ApiController::class, 'createMicrophoneReading']);
 Route::post('createhumtemp', [ApiController::class, 'createHumTempReading']);
 Route::post('createpollen', [ApiController::class,  'createPollenReading']);
